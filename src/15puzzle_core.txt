@@ -20,12 +20,14 @@ Cell number is equal to [place ID % 4]: 0..3
 Example 1: expression "lstPlaces[2] == 3" means "Draught with ID==3 (and with label=="4") now is laying at place with ID==2". Here row is 0 (2/4=0) and cell is 2 (2%4=2).
 Example 2: expression "lstPlaces[10] == 15" means "Place with ID==10 is emply". Here row is 2 (10/4=2) and cell is 2 (10%4=2).
 
-Name: lst
-Type:
-Description: 
+Name: lstMovableDraughts (List of places)
+Type: List (ordered)
+Description: Contains from 2 to 4 places from where is it possible to move draught to free place.
+
 Name:
 Type:
 Description: 
+
 Name:
 Type:
 Description: 
