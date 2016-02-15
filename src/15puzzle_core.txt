@@ -4,9 +4,14 @@ Author: Andrii Grytsenko
 Programing Language: Python (on-line interpreter www.codeskulptor.org)
 
 Section 1. Data structures
-Name:
-Type:
-Description: 
+Name: lstPlaces (List of places)
+Type: List (ordered)
+Description: Contains 16 places for 15 Draughts (one place remains empty). 
+Classicaly draughts numbered from 1 to 15. 
+Here draughts will be internaly marked (ID) from 0 to 14.
+During drawing draught's label we will add "1" to draught's ID.
+Empty place will have ID 15. We will check this special number to draw an emply space instead of draught with label "16".
+So desired state of a game will correspond to ordered list: 0, 1, 2, ..., 14, 15.
 
 Name:
 Type:
