@@ -1,0 +1,4 @@
+Description: 15 Puzzle
+Date: 15 FEB 2016
+Author: Andrii Grytsenko
+
