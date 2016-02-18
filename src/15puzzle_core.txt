@@ -52,16 +52,17 @@ Out: boolean
 Description: Check if all graughts are at the right places. 
 Simply to check if ID of place is equal to ID of draught at that place (lstPlaces[i] == i)
 
-Name: isOrdered
-In: lstPlaces
+Name: isMovable
+In: ID
 Out: boolean
-Description: Check if all graughts are at the right places. 
-Simply to check if ID of place is equal to ID of draught at that place (lstPlaces[i] == i)
+Description: Check if is it possible to move a draught from selected place to a free place. 
+As we have a list of such places (lstMovableDraughts) the task is to check if selected ID is in the list.
 
 Name: moveDraught
-In: lstPlaces, ID of place
+In: lstPlaces, "ID of place"
 Out: none
-Description: 
+Description: Exchange IDs of draughts at places "ID of place" and iFreePlace (lstPlaces["ID of place"] <==> lstPlaces[iFreePlace].
+After that change the ID of free place (iFreePlace = "ID of place") and fresh lstMovableDraughts.
 
 Name: 
 In: 
