@@ -5,10 +5,6 @@
 
 import simplegui
 
-PUZZLE_SIZE = 4
-IDX_MIN = 0
-IDX_MAX = PUZZLE_SIZE-1
-
 class FPuzzle:
     def __init__(self, puzzle_size = 4, free_place = 15):
         self.PUZZLE_SIZE = puzzle_size
@@ -21,7 +17,8 @@ class FPuzzle:
         self.iMovements = 0
         
     def __str__(self):
-#        return "Draughts: " + self.lstPlaces + 
+        pass
+        #return "Draughts: " + self.lstPlaces + 
 
     #Name: isOrdered
     #In: lst
@@ -69,10 +66,6 @@ class FPuzzle:
 
 
 # Test area
-PUZZLE_SIZE = 4
-IDX_MIN = 0
-IDX_MAX = PUZZLE_SIZE-1
-
 fp = FPuzzle(4)
 
 print fp.lstPlaces
