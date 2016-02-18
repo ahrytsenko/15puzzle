@@ -45,8 +45,26 @@ Type: constant (integer, compute from PUZZLE_SIZE, usually equals to PUZZLE_SIZE
 Description: Maximal index of array
 /////////////////////////////
 
+Section 2. Core functions
+Name: isOrdered
+In: lst
+Out: boolean
+Description: Check if all graughts are at the right places. 
+Simply to check if ID of place is equal to ID of draught at that place (lstPlaces[i] == i)
 
 Name: isOrdered
-In: ?
-Out: ?
-Description:
+In: lstPlaces
+Out: boolean
+Description: Check if all graughts are at the right places. 
+Simply to check if ID of place is equal to ID of draught at that place (lstPlaces[i] == i)
+
+Name: moveDraught
+In: lstPlaces, ID of place
+Out: none
+Description: 
+
+Name: 
+In: 
+Out: 
+Description: 
+
