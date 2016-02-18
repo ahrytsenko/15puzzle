@@ -24,13 +24,25 @@ Name: lstMovableDraughts (List of places)
 Type: List (ordered)
 Description: Contains from 2 to 4 places from where is it possible to move draught to free place.
 
-Name:
-Type:
-Description: 
+Name: iFreePlace
+Type: integer
+Description: ID of a free place
 
-Name:
-Type:
-Description: 
+Name: iMovements
+Type: integer
+Description: Movements were made since the start solving the current puzzle 
+
+Name: PUZZLE_SIZE
+Type: constant (integer)
+Description: Amount of rows (and colls cause its are equal). In classical game it is equal to 4
+
+Name: IDX_MIN
+Type: constant (integer, usually equals to 0)
+Description: Minimal index of array
+
+Name: IDX_MAX
+Type: constant (integer, compute from PUZZLE_SIZE, usually equals to PUZZLE_SIZE-1)
+Description: Maximal index of array
 /////////////////////////////
 
 
