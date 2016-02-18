@@ -20,7 +20,7 @@ IDX_MAX = PUZZLE_SIZE-1
 #Simply to check if ID of place is equal to ID of draught at that place (lstPlaces[i] == i)
 def isOrdered(aList):
     bOrdered = True
-    for i in range(aList.len()):
+    for i in range(len(aList)):
         if bOrdered:
             bOrdered = (aList[i] == i)
     return bOrdered
@@ -33,7 +33,7 @@ def isOrdered(aList):
 def isMovable(aList, ID):
     bPossible = False
     for placeID in aList:
-        if !bPossible:
+        if not bPossible:
             bPossible = (placeID == ID)
     return bPossible
 
