@@ -46,7 +46,7 @@ def moveDraught(aList, ID):
     pass
 
 def getID(aRow, aCol, aSize):
-    return (aRow*(aSize-1) + aCol)
+    return (aRow*(aSize) + aCol)
     
 def getRow(ID, aSize):
     return (ID / aSize)
@@ -70,5 +70,18 @@ print isOrdered(lstPlaces)
 #lstMovableDraughts = []
 #iFreePlace = 0
 #iMovements = 0
+
+print getID(0, 0, PUZZLE_SIZE)
+print getID(2, 2, PUZZLE_SIZE)
+print getID(3, 0, PUZZLE_SIZE)
+print ""
+print getRow(5, PUZZLE_SIZE)
+print getRow(1, PUZZLE_SIZE)
+print getRow(15, PUZZLE_SIZE)
+print ""
+print getCol(5, PUZZLE_SIZE)
+print getCol(1, PUZZLE_SIZE)
+print getCol(15, PUZZLE_SIZE)
+
 
 
