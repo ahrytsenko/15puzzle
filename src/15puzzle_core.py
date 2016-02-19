@@ -4,8 +4,9 @@
 #rograming Language: Python (on-line interpreter www.codeskulptor.org)
 
 import simplegui
+import random
 
-class FPuzzle:
+class FifteenPuzzleCore:
     def __init__(self, puzzle_size = 4, free_place = 15):
         self.PUZZLE_SIZE = puzzle_size
         self.FREE_PLACE = free_place
@@ -15,6 +16,7 @@ class FPuzzle:
         self.lstMovableDraughts = []
         self.iFreePlace = 15
         self.iMovements = 0
+        self.updateMovableDraughts()
         
     def __str__(self):
         pass
@@ -53,6 +55,8 @@ class FPuzzle:
         self.lstPlaces[self.iFreePlace] = self.lstPlaces[ID]
         self.lstPlaces[ID] = self.FREE_PLACE
         self.iFreePlace = ID
+        self.updateMovableDraughts()
+        self.iMovements += 1
 
     def getID(self, aRow, aCol):
         return (aRow*(self.PUZZLE_SIZE) + aCol)
@@ -63,25 +67,82 @@ class FPuzzle:
     def getCol(self, ID):
         return (ID % self.PUZZLE_SIZE)
     
-
-
+    def updateMovableDraughts(self):
+        self.lstMovableDraughts = []
+        if self.getRow(self.iFreePlace) > 0:
+            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace)-1, self.getCol(self.iFreePlace)))
+        if self.getRow(self.iFreePlace) < self.PUZZLE_SIZE-1:
+            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace)+1, self.getCol(self.iFreePlace)))
+        if self.getCol(self.iFreePlace) > 0:
+            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)-1))
+        if self.getCol(self.iFreePlace) < self.PUZZLE_SIZE-1:
+            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)+1))
+    
+    def shuffle(self):
+        random.shuffle(self.lstPlaces)
+        self.iMovements = 0
+        self.iFreePlace = self.lstPlaces.index(self.FREE_PLACE)
+    
 # Test area
-fp = FPuzzle(4)
+fpc = FifteenPuzzleCore(4)
+fpc.shuffle()
 
-print fp.lstPlaces
-print fp.isOrdered()
+print fpc.lstPlaces
+print fpc.iFreePlace
+print fpc.lstMovableDraughts
+print fpc.isOrdered()
 
-print fp.getID(0, 0)
-print fp.getID(2, 2)
-print fp.getID(3, 0)
-print ""
-print fp.getRow(5)
-print fp.getRow(1)
-print fp.getRow(15)
-print ""
-print fp.getCol(5)
-print fp.getCol(1)
-print fp.getCol(15)
+print "fpc.moveDraught(0)"
+if fpc.isMovable(0): 
+    fpc.moveDraught(0)
+print fpc.lstPlaces
+print fpc.iFreePlace
+print fpc.lstMovableDraughts
+print fpc.isOrdered()
 
+print "fpc.moveDraught(11)"
+if fpc.isMovable(11): 
+    fpc.moveDraught(11)
+print fpc.lstPlaces
+print fpc.iFreePlace
+print fpc.lstMovableDraughts
+print fpc.isOrdered()
 
+print "fpc.moveDraught(6)"
+if fpc.isMovable(6): 
+    fpc.moveDraught(6)
+print fpc.lstPlaces
+print fpc.iFreePlace
+print fpc.lstMovableDraughts
+print fpc.isOrdered()
 
+print "fpc.moveDraught(15)"
+if fpc.isMovable(15): 
+    fpc.moveDraught(15)
+print fpc.lstPlaces
+print fpc.iFreePlace
+print fpc.lstMovableDraughts
+print fpc.isOrdered()
+
+print "fpc.moveDraught(10)"
+if fpc.isMovable(10): 
+    fpc.moveDraught(10)
+print fpc.lstPlaces
+print fpc.iFreePlace
+print fpc.lstMovableDraughts
+print fpc.isOrdered()
+
+print "fpc.moveDraught(0)"
+if fpc.isMovable(0): 
+    fpc.moveDraught(0)
+print fpc.lstPlaces
+print fpc.iFreePlace
+print fpc.lstMovableDraughts
+print fpc.isOrdered()
+
+print "fpc.moveDraught(15)"
+if fpc.isMovable(15): 
+    fpc.moveDraught(15)
+print fpc.lstPlaces
+print fpc.lstMovableDraughts
+print fpc.isOrdered()
