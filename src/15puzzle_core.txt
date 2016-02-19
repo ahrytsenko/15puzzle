@@ -26,7 +26,7 @@ Description: Contains from 2 to 4 places from where is it possible to move draug
 
 Name: iFreePlace
 Type: integer
-Description: ID of a free place
+Description: ID of a free place. Can be computable.
 
 Name: iMovements
 Type: integer
@@ -35,17 +35,11 @@ Description: Movements were made since the start solving the current puzzle
 Name: PUZZLE_SIZE
 Type: constant (integer)
 Description: Amount of rows (and colls cause its are equal). In classical game it is equal to 4
-
-Name: IDX_MIN
-Type: constant (integer, usually equals to 0)
-Description: Minimal index of array
-
-Name: IDX_MAX
-Type: constant (integer, compute from PUZZLE_SIZE, usually equals to PUZZLE_SIZE-1)
-Description: Maximal index of array
 /////////////////////////////
 
 Section 2. Core functions
+
+Section 2.1 public methods
 Name: isOrdered
 In: lst
 Out: boolean
@@ -62,10 +56,34 @@ Name: moveDraught
 In: lstPlaces, "ID of place"
 Out: none
 Description: Exchange IDs of draughts at places "ID of place" and iFreePlace (lstPlaces["ID of place"] <==> lstPlaces[iFreePlace].
-After that change the ID of free place (iFreePlace = "ID of place") and fresh lstMovableDraughts.
+After that change the ID of free place (iFreePlace = "ID of place"), increase iMovements and fresh lstMovableDraughts.
 
-Name: 
-In: 
-Out: 
-Description: 
+Name: shuffle
+In: none
+Out: none
+Description: Shuffle draughts in a list.
 
+Section 2.2 private methods
+
+Name: updateMovableDraughts
+In: none
+Out: none
+Description: Update lstMovableDraughts by following next rules: 
+there are only to draughts possibel to move to free place at corner;
+there are three draughts possible to move to free place at the border;
+there are four draughts possible to move to free place in middle.
+
+Name: getID
+In: row (integer), col (integer)
+Out: ID (integer)
+Description: Compute ID by given row and column numbers.
+
+Name: getRow
+In: ID (integer)
+Out: row (integer)
+Description: Compute row by given ID.
+
+Name: getCol
+In: ID (integer)
+Out: col (integer)
+Description: Compute column by given ID.
