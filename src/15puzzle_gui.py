@@ -40,6 +40,7 @@ class VisualBlock(Block):
         Block.__init__(self, size, pos)
         self.color = list(color)
         self.borderWidth = borderWidth
+        self.items = []
         
     def getBlockColor(self): return self.color[0]
     def getBorderColor(self): return self.color[1]
@@ -48,9 +49,13 @@ class VisualBlock(Block):
     def setBlockColor(self, blockColor): self.color[0] = blockColor
     def setBorderColor(self, borderColor): self.color[0] = borderColor
     def setColor(self, blockColor, borderColor): self.color = [blockColor, borderColor]
+        
+    def append(self, visualBlock):
+        self.items.append(visualBlock)
     
     def draw(self, canvas):
         canvas.draw_polygon(self.getPolygon(), self.getBorderWidth(), self.getBorderColor(), self.getBlockColor())
+        for item in self.items: item.draw(canvas)
     
 # Handler to draw on canvas
 def draw(canvas):
@@ -66,3 +71,5 @@ frame.start()
 
 # Test area
 vb = VisualBlock([WIDTH, HEIGHT], [0, 0], ["White", "Green"], 1)
+vb2 = VisualBlock([WIDTH/2, HEIGHT/2], [WIDTH/2, HEIGHT/2], ["Green", "Yellow"], 1)
+vb.append(vb2)
