@@ -3,6 +3,7 @@
 #Author: Andrii Grytsenko
 #rograming Language: Python (on-line interpreter www.codeskulptor.org)
 
+
 import simplegui
 import random
 
@@ -22,13 +23,21 @@ class Block:
     def getPos(self): return list(self.pos)
     def getSize(self): return list(self.size)
     def setPos(self, x, y): 
-        self.pos = list(x, y)
+        self.pos = [x, y]
     def setSize(self, x, y): 
-        self.size = list(x, y)
+        self.size = [x, y]
     
 # Test area
 b = Block([10, 10], [30, 30])
 
-print b
 print b.size
 print b.pos
+print b.getPos()
+print b.getPosX()
+print b.getPosY()
+b.setPosX(15)
+b.setPosY(25)
+print b.getPos()
+
+b.setPos(35, 55)
+print b.getPos()
