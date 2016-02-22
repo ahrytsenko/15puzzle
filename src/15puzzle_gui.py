@@ -10,6 +10,8 @@ import random
 WIDTH = 160
 HEIGHT = 160
 
+vb = None
+
 class Block:
     def __init__(self, size, pos):
         self.size = list(size)
@@ -33,7 +35,7 @@ class Block:
     def getBottomLeft(self): return [self.getPosX(), self.getPosY()+self.getSizeY()]
     def getPolygon(self): return [self.getTopLeft(), self.getTopRight(), self.getBottomRight(), self.getBottomLeft()]
     
-class VisualBlock:
+class VisualBlock(Block):
     def __init__(self, size, pos, color, borderWidth):
         Block.__init__(self, size, pos)
         self.color = list(color)
@@ -48,11 +50,12 @@ class VisualBlock:
     def setColor(self, blockColor, borderColor): self.color = [blockColor, borderColor]
     
     def draw(self, canvas):
-        canvas.draw_polygon(self.getPolygon(), self.getBorderWidth, self.getBlockColor, self.getBorderColor)
+        canvas.draw_polygon(self.getPolygon(), self.getBorderWidth(), self.getBorderColor(), self.getBlockColor())
     
 # Handler to draw on canvas
 def draw(canvas):
-    pass
+    global vb
+    vb.draw(canvas)
 
 # Create a frame and assign callbacks to event handlers
 frame = simplegui.create_frame("Home", WIDTH, HEIGHT)
@@ -62,6 +65,4 @@ frame.set_draw_handler(draw)
 frame.start()
 
 # Test area
-b = Block([10, 10], [30, 30])
-
-vb = VisualBlock([50, 40], [10, 30], ["White", "Green", 1])
+vb = VisualBlock([WIDTH, HEIGHT], [0, 0], ["White", "Green"], 1)
