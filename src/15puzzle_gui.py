@@ -7,8 +7,9 @@
 import simplegui
 import random
 
-WIDTH = 160
-HEIGHT = 160
+WIDTH = 80
+HEIGHT = 80
+EMPTY_NUMBER = 15
 
 vb = None
 
@@ -56,6 +57,27 @@ class VisualBlock(Block):
     def draw(self, canvas):
         canvas.draw_polygon(self.getPolygon(), self.getBorderWidth(), self.getBorderColor(), self.getBlockColor())
         for item in self.items: item.draw(canvas)
+            
+class Draught(VisualBlock):
+    def __init__(self, size, pos, color, borderWidth, caption, number, frame):
+        VisualBlock.__init__(self, size, pos, color, borderWidth)
+        self.caption = caption
+        self.number = number
+        self.frame = frame
+        
+    def getCaption(self): return self.caption
+    def getNumber(self): return self.number
+    def setCaption(self, caption): self.caption = caption
+    def setNumber(self, number): self.number = number
+    def getCaptionPosition(self):
+        cp = self.getBottomLeft()
+        cp[0] += (self.getSizeX()-self.frame.get_canvas_textwidth(self.caption, self.getSizeY()))/2
+        cp[1] -= self.getSizeY()/8
+        return list(cp)
+        
+    def draw(self, canvas):
+        VisualBlock.draw(self, canvas)
+        canvas.draw_text(self.caption, self.getCaptionPosition(), self.getSizeY(), self.getBorderColor())
     
 # Handler to draw on canvas
 def draw(canvas):
@@ -71,5 +93,5 @@ frame.start()
 
 # Test area
 vb = VisualBlock([WIDTH, HEIGHT], [0, 0], ["White", "Green"], 1)
-vb2 = VisualBlock([WIDTH/2, HEIGHT/2], [WIDTH/2, HEIGHT/2], ["Green", "Yellow"], 1)
+vb2 = Draught([WIDTH/2, HEIGHT/2], [WIDTH/2, HEIGHT/2], ["Green", "Yellow"], 1, "12", 12, frame)
 vb.append(vb2)
