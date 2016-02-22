@@ -7,6 +7,9 @@
 import simplegui
 import random
 
+WIDTH = 160
+HEIGHT = 160
+
 class Block:
     def __init__(self, size, pos):
         self.size = list(size)
@@ -47,6 +50,17 @@ class VisualBlock:
     def draw(self, canvas):
         canvas.draw_polygon(self.getPolygon(), self.getBorderWidth, self.getBlockColor, self.getBorderColor)
     
+# Handler to draw on canvas
+def draw(canvas):
+    pass
+
+# Create a frame and assign callbacks to event handlers
+frame = simplegui.create_frame("Home", WIDTH, HEIGHT)
+frame.set_draw_handler(draw)
+
+# Start the frame animation
+frame.start()
+
 # Test area
 b = Block([10, 10], [30, 30])
 
