@@ -79,6 +79,12 @@ class Draught(VisualBlock):
         VisualBlock.draw(self, canvas)
         canvas.draw_text(self.caption, self.getCaptionPosition(), self.getSizeY(), self.getBorderColor())
     
+class Draughts(VisualBlock):
+    def __init__(self, size, color, frame):
+        VisualBlock.__init__(self, size, [0, 0], color, 1)
+        self.frame = frame
+    
+    
 # Handler to draw on canvas
 def draw(canvas):
     global vb
