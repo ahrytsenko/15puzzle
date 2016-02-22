@@ -22,22 +22,32 @@ class Block:
     def setSizeY(self, y): self.size[1]=y
     def getPos(self): return list(self.pos)
     def getSize(self): return list(self.size)
-    def setPos(self, x, y): 
-        self.pos = [x, y]
-    def setSize(self, x, y): 
-        self.size = [x, y]
+    def setPos(self, x, y): self.pos = [x, y]
+    def setSize(self, x, y): self.size = [x, y]
+    def getTopLeft(self): return self.getPos()
+    def getTopRight(self) : return [self.getPosX()+self.getSizeX(), self.getPosY()]
+    def getBottomRight(self): return [self.getPosX()+self.getSizeX(), self.getPosY()+self.getSizeY()]
+    def getBottomLeft(self): return [self.getPosX(), self.getPosY()+self.getSizeY()]
+    def getPolygon(self): return [self.getTopLeft(), self.getTopRight(), self.getBottomRight(), self.getBottomLeft()]
+    
+class VisualBlock:
+    def __init__(self, size, pos, color, borderWidth):
+        Block.__init__(self, size, pos)
+        self.color = list(color)
+        self.borderWidth = borderWidth
+        
+    def getBlockColor(self): return self.color[0]
+    def getBorderColor(self): return self.color[1]
+    def getColor(self): return list(self.color)
+    def getBorderWidth(self): return self.borderWidth
+    def setBlockColor(self, blockColor): self.color[0] = blockColor
+    def setBorderColor(self, borderColor): self.color[0] = borderColor
+    def setColor(self, blockColor, borderColor): self.color = [blockColor, borderColor]
+    
+    def draw(self, canvas):
+        canvas.draw_polygon(self.getPolygon(), self.getBorderWidth, self.getBlockColor, self.getBorderColor)
     
 # Test area
 b = Block([10, 10], [30, 30])
 
-print b.size
-print b.pos
-print b.getPos()
-print b.getPosX()
-print b.getPosY()
-b.setPosX(15)
-b.setPosY(25)
-print b.getPos()
-
-b.setPos(35, 55)
-print b.getPos()
+vb = VisualBlock([50, 40], [10, 30], ["White", "Green", 1])
