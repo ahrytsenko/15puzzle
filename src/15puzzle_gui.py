@@ -11,6 +11,20 @@ class Block:
         self.size = list(size)
         self.pos = list(pos)
 
+    def getPosX(self): return self.pos[0]
+    def getPosY(self): return self.pos[1]
+    def getSizeX(self): return self.size[0]
+    def getSizeY(self): return self.size[1]
+    def setPosX(self, x): self.pos[0]=x
+    def setPosY(self, y): self.pos[1]=y
+    def setSizeX(self, x): self.size[0]=x
+    def setSizeY(self, y): self.size[1]=y
+    def getPos(self): return list(self.pos)
+    def getSize(self): return list(self.size)
+    def setPos(self, x, y): 
+        self.pos = list(x, y)
+    def setSize(self, x, y): 
+        self.size = list(x, y)
     
 # Test area
 b = Block([10, 10], [30, 30])
