@@ -90,9 +90,12 @@ class Draughts(VisualBlock):
         for col in range(self.draughts_mtrx[0]):
             for row in range(self.draughts_mtrx[1]):
                 if (self.getDraughtID(row, col) == self.EMPTY_NUMBER):
-                    self.append(Draught(self.draught_size, self.getDraughtPosByID(self.getDraughtID(row, col)), self.color, 1, "", self.getDraughtID(row, col), self.frame))
+                    tmp_color = list(self.color)
+                    tmp_caption = ""
                 else:
-                    self.append(Draught(self.draught_size, self.getDraughtPosByID(self.getDraughtID(row, col)), [self.color[1], self.color[0]], 1, str(self.getDraughtID(row, col)+1), self.getDraughtID(row, col), self.frame))
+                    tmp_color = [self.color[1], self.color[0]]
+                    tmp_caption = str(self.getDraughtID(row, col)+1)
+                self.append(Draught(self.draught_size, self.getDraughtPosByID(self.getDraughtID(row, col)), tmp_color, 1, tmp_caption, self.getDraughtID(row, col), self.frame))
         
     def getDraughtPosByID(self, ID):
         return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
