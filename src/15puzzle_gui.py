@@ -7,11 +7,12 @@
 import simplegui
 import random
 
-WIDTH = 80
-HEIGHT = 80
+WIDTH = 160
+HEIGHT = 160
 EMPTY_NUMBER = 15
 
 vb = None
+draughts = None
 
 class Block:
     def __init__(self, size, pos):
@@ -80,16 +81,26 @@ class Draught(VisualBlock):
         canvas.draw_text(self.caption, self.getCaptionPosition(), self.getSizeY(), self.getBorderColor())
     
 class Draughts(VisualBlock):
-    def __init__(self, size, color, frame):
+    def __init__(self, size, color, frame, empty_number, draughts_mtrx):
         VisualBlock.__init__(self, size, [0, 0], color, 1)
         self.frame = frame
-        
-    
-    
+        self.EMPTY_NUMBER = empty_number
+        self.draughts_mtrx = list(draughts_mtrx)
+        self.draught_size = [self.size[0]/4, self.size[1]/4]
+        for col in range(self.draughts_mtrx[0]):
+            for row in range(self.draughts_mtrx[1]):
+                self.append(Draught(self.draught_size, [0, 0], [self.color[1], self.color[0]], 1, str(0), 0, self.frame))
+                
+        def getDraughtPosByID(self, ID): 
+            return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
+                    self.pos[1]+(self.draught_size[0]*(ID%self.draughts_mtrx[0]]
+        def getDraughtID(self, row, col): return (row*self.draught_mtrx[1] + col)
+
+
 # Handler to draw on canvas
 def draw(canvas):
-    global vb
-    vb.draw(canvas)
+    global draughts
+    draughts.draw(canvas)
 
 # Create a frame and assign callbacks to event handlers
 frame = simplegui.create_frame("Home", WIDTH, HEIGHT)
@@ -99,6 +110,6 @@ frame.set_draw_handler(draw)
 frame.start()
 
 # Test area
-vb = VisualBlock([WIDTH, HEIGHT], [0, 0], ["White", "Green"], 1)
-vb2 = Draught([WIDTH/2, HEIGHT/2], [WIDTH/2, HEIGHT/2], ["Green", "Yellow"], 1, "12", 12, frame)
-vb.append(vb2)
+draughts = Draughts([WIDTH, HEIGHT], ["White", "Green"], frame, EMPTY_NUMBER, [4, 4])
+#vb2 = Draught([WIDTH/2, HEIGHT/2], [WIDTH/2, HEIGHT/2], ["Green", "Yellow"], 1, "12", 12, frame)
+#vb.append(vb2)
