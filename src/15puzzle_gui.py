@@ -93,7 +93,7 @@ class Draughts(VisualBlock):
                 
         def getDraughtPosByID(self, ID): 
             return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
-                    self.pos[1]+(self.draught_size[0]*(ID%self.draughts_mtrx[0]]
+                    self.pos[1]+(self.draught_size[1]*(ID%self.draughts_mtrx[1]))]
         def getDraughtID(self, row, col): return (row*self.draught_mtrx[1] + col)
 
 
