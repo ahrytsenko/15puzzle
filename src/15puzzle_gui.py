@@ -7,8 +7,8 @@
 import simplegui
 import random
 
-WIDTH = 160
-HEIGHT = 160
+WIDTH = 240
+HEIGHT = 240
 EMPTY_NUMBER = 15
 
 vb = None
@@ -89,12 +89,16 @@ class Draughts(VisualBlock):
         self.draught_size = [self.size[0]/4, self.size[1]/4]
         for col in range(self.draughts_mtrx[0]):
             for row in range(self.draughts_mtrx[1]):
-                self.append(Draught(self.draught_size, [0, 0], [self.color[1], self.color[0]], 1, str(0), 0, self.frame))
-                
-        def getDraughtPosByID(self, ID): 
-            return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
-                    self.pos[1]+(self.draught_size[1]*(ID%self.draughts_mtrx[1]))]
-        def getDraughtID(self, row, col): return (row*self.draught_mtrx[1] + col)
+                if (self.getDraughtID(row, col) == self.EMPTY_NUMBER):
+                    self.append(Draught(self.draught_size, self.getDraughtPosByID(self.getDraughtID(row, col)), self.color, 1, "", self.getDraughtID(row, col), self.frame))
+                else:
+                    self.append(Draught(self.draught_size, self.getDraughtPosByID(self.getDraughtID(row, col)), [self.color[1], self.color[0]], 1, str(self.getDraughtID(row, col)+1), self.getDraughtID(row, col), self.frame))
+        
+    def getDraughtPosByID(self, ID):
+        return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
+                self.pos[1]+(self.draught_size[1]*(ID/self.draughts_mtrx[1]))]
+
+    def getDraughtID(self, row, col): return (row*self.draughts_mtrx[1] + col)
 
 
 # Handler to draw on canvas
