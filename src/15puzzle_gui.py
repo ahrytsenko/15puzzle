@@ -7,8 +7,8 @@
 import simplegui
 import random
 
-WIDTH = 240
-HEIGHT = 240
+WIDTH = 320
+HEIGHT = 320
 EMPTY_NUMBER = 15
 
 vb = None
@@ -115,5 +115,3 @@ frame.start()
 
 # Test area
 draughts = Draughts([WIDTH, HEIGHT], ["White", "Green"], frame, EMPTY_NUMBER, [4, 4])
-#vb2 = Draught([WIDTH/2, HEIGHT/2], [WIDTH/2, HEIGHT/2], ["Green", "Yellow"], 1, "12", 12, frame)
-#vb.append(vb2)
