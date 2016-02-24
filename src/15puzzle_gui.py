@@ -54,6 +54,10 @@ class VisualBlock(Block):
         
     def append(self, visualBlock):
         self.items.append(visualBlock)
+        
+    def isSelected(self, pos):
+        return (((pos[0] >= self.pos[0]) and (pos[0] < (self.pos[0]+self.size[0]))) and 
+                ((pos[1] >= self.pos[1]) and (pos[1] < (self.pos[1]+self.size[1]))))
     
     def draw(self, canvas):
         canvas.draw_polygon(self.getPolygon(), self.getBorderWidth(), self.getBorderColor(), self.getBlockColor())
@@ -102,8 +106,21 @@ class Draughts(VisualBlock):
                 self.pos[1]+(self.draught_size[1]*(ID/self.draughts_mtrx[1]))]
 
     def getDraughtID(self, row, col): return (row*self.draughts_mtrx[1] + col)
+    
+    def getSelectedDraughtID(self, pos):
+        found = False
+        for item in self.items:
+            if (not found):
+                if item.isSelected(pos):
+                    return item.getNumber()
+        return -1
+                    
 
-
+# Handler for mouse
+def mouse_handler(position):
+    global draughts
+    print draughts.getSelectedDraughtID(position)
+    
 # Handler to draw on canvas
 def draw(canvas):
     global draughts
@@ -111,6 +128,7 @@ def draw(canvas):
 
 # Create a frame and assign callbacks to event handlers
 frame = simplegui.create_frame("Home", WIDTH, HEIGHT)
+frame.set_mouseclick_handler(mouse_handler)
 frame.set_draw_handler(draw)
 
 # Start the frame animation
