@@ -52,6 +52,9 @@ class FifteenPuzzleCore:
     
     #Public methods
     
+    def getMovements(self): return self.iMovements
+    def getPlaces(self): return list(self.lstPlaces)
+    
     #Description: Check if all graughts are at the right places. 
     #Simply to check if ID of place is equal to ID of draught at that place (lstPlaces[i] == i)
     def isOrdered(self):
@@ -162,20 +165,24 @@ class Draughts(VisualBlock):
         self.draughts_mtrx = list(draughts_mtrx)
         self.draught_size = [self.size[0]/self.draughts_mtrx[0], self.size[1]/self.draughts_mtrx[1]]
         self.fpc = FifteenPuzzleCore(draughts_mtrx[0], empty_number)
-        
-        for col in range(self.draughts_mtrx[0]):
-            for row in range(self.draughts_mtrx[1]):
-                if (self.getDraughtID(row, col) == self.EMPTY_NUMBER):
-                    tmp_color = list(self.color)
-                    tmp_caption = ""
-                else:
-                    tmp_color = [self.color[1], self.color[0]]
-                    tmp_caption = str(self.getDraughtID(row, col)+1)
-                self.append(Draught(self.draught_size, self.getDraughtPosByID(self.getDraughtID(row, col)), tmp_color, 1, tmp_caption, self.getDraughtID(row, col), self.frame))
+        self.fpc.shuffle()
+        i = 0
+        for place in self.fpc.getPlaces():
+            self.append(Draught(self.draught_size, self.getDraughtPosByID(i), self.getDraughtColorByID(place), 
+                                1, self.getDraughtCaptionByID(place), place, self.frame))
+            i += 1
         
     def getDraughtPosByID(self, ID):
         return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
                 self.pos[1]+(self.draught_size[1]*(ID/self.draughts_mtrx[0]))]
+    
+    def getDraughtCaptionByID(self, ID):
+        if (ID == self.EMPTY_NUMBER): return ""
+        else: return str(ID+1)
+        
+    def getDraughtColorByID(self, ID):
+        if (ID == self.EMPTY_NUMBER): return list(self.color)
+        else: return [self.color[1], self.color[0]]
 
     def getDraughtID(self, row, col): return (row*self.draughts_mtrx[0] + col)
     
@@ -191,7 +198,8 @@ class Draughts(VisualBlock):
 # Handler for mouse
 def mouse_handler(position):
     global draughts
-    print draughts.getSelectedDraughtID(position)
+    if (draughts.fpc.isMovable(draughts.fpc.getPlaces().index(draughts.getSelectedDraughtID(position)))):
+        draughts.fpc.moveDraught(draughts.fpc.getPlaces().index(draughts.getSelectedDraughtID(position)))
     
 # Handler to draw on canvas
 def draw(canvas):
