@@ -10,6 +10,8 @@ import random
 WIDTH = 320
 HEIGHT = 320
 EMPTY_NUMBER = 15
+PUZZLE_DIMENSION = [4, 4]
+PUZZLE_COLORS = ["White", "Green"]
 
 vb = None
 draughts = None
@@ -90,7 +92,7 @@ class Draughts(VisualBlock):
         self.frame = frame
         self.EMPTY_NUMBER = empty_number
         self.draughts_mtrx = list(draughts_mtrx)
-        self.draught_size = [self.size[0]/4, self.size[1]/4]
+        self.draught_size = [self.size[0]/self.draughts_mtrx[0], self.size[1]/self.draughts_mtrx[1]]
         for col in range(self.draughts_mtrx[0]):
             for row in range(self.draughts_mtrx[1]):
                 if (self.getDraughtID(row, col) == self.EMPTY_NUMBER):
@@ -103,9 +105,9 @@ class Draughts(VisualBlock):
         
     def getDraughtPosByID(self, ID):
         return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
-                self.pos[1]+(self.draught_size[1]*(ID/self.draughts_mtrx[1]))]
+                self.pos[1]+(self.draught_size[1]*(ID/self.draughts_mtrx[0]))]
 
-    def getDraughtID(self, row, col): return (row*self.draughts_mtrx[1] + col)
+    def getDraughtID(self, row, col): return (row*self.draughts_mtrx[0] + col)
     
     def getSelectedDraughtID(self, pos):
         found = False
@@ -135,4 +137,4 @@ frame.set_draw_handler(draw)
 frame.start()
 
 # Test area
-draughts = Draughts([WIDTH, HEIGHT], ["White", "Green"], frame, EMPTY_NUMBER, [4, 4])
+draughts = Draughts([WIDTH, HEIGHT], PUZZLE_COLORS, frame, EMPTY_NUMBER, PUZZLE_DIMENSION)
