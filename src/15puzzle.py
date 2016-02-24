@@ -9,13 +9,12 @@ import random
 WIDTH = 320
 HEIGHT = 320
 EMPTY_NUMBER = 15
-PUZZLE_DIMENSION = [4, 4]
+PUZZLE_DIMENSION = 4
 PUZZLE_COLORS = ["White", "Green"]
 
 draughts = None
 
 class FifteenPuzzleCore:
-    
     def __init__(self, puzzle_size = 4, free_place = 15):
         self.PUZZLE_SIZE = puzzle_size
         self.FREE_PLACE = free_place
@@ -162,6 +161,8 @@ class Draughts(VisualBlock):
         self.EMPTY_NUMBER = empty_number
         self.draughts_mtrx = list(draughts_mtrx)
         self.draught_size = [self.size[0]/self.draughts_mtrx[0], self.size[1]/self.draughts_mtrx[1]]
+        self.fpc = FifteenPuzzleCore(draughts_mtrx[0], empty_number)
+        
         for col in range(self.draughts_mtrx[0]):
             for row in range(self.draughts_mtrx[1]):
                 if (self.getDraughtID(row, col) == self.EMPTY_NUMBER):
@@ -206,4 +207,4 @@ frame.set_draw_handler(draw)
 frame.start()
 
 # Test area
-draughts = Draughts([WIDTH, HEIGHT], PUZZLE_COLORS, frame, EMPTY_NUMBER, PUZZLE_DIMENSION)
+draughts = Draughts([WIDTH, HEIGHT], PUZZLE_COLORS, frame, EMPTY_NUMBER, [PUZZLE_DIMENSION, PUZZLE_DIMENSION])
