@@ -186,6 +186,10 @@ class Draughts(VisualBlock):
 
     def getDraughtID(self, row, col): return (row*self.draughts_mtrx[0] + col)
     
+    def updateDraughts(self):
+        for i in range(self.draughts_mtrx[0]*self.draughts_mtrx[1]):
+            
+    
     def getSelectedDraughtID(self, pos):
         found = False
         for item in self.items:
