@@ -147,6 +147,7 @@ class Draught(VisualBlock):
     def getNumber(self): return self.number
     def setCaption(self, caption): self.caption = caption
     def setNumber(self, number): self.number = number
+    def setColor(self, color): self.color = list(color)
     def getCaptionPosition(self):
         cp = self.getBottomLeft()
         cp[0] += (self.getSizeX()-self.frame.get_canvas_textwidth(self.caption, self.getSizeY()))/2
@@ -169,7 +170,7 @@ class Draughts(VisualBlock):
         i = 0
         for place in self.fpc.getPlaces():
             self.append(Draught(self.draught_size, self.getDraughtPosByID(i), self.getDraughtColorByID(place), 
-                                1, self.getDraughtCaptionByID(place), place, self.frame))
+                                1, self.getDraughtCaptionByID(place), i, self.frame))
             i += 1
         
     def getDraughtPosByID(self, ID):
@@ -189,6 +190,7 @@ class Draughts(VisualBlock):
     def updateDraughts(self):
         for i in range(self.draughts_mtrx[0]*self.draughts_mtrx[1]):
             self.items[i].setCaption(self.getDraughtCaptionByID(self.fpc.lstPlaces[i]))
+            self.items[i].setColor(self.getDraughtColorByID(self.fpc.lstPlaces[i]))
             #self.items[i].setNumber(self.fpc.lstPlaces[i])
     
     def getSelectedDraughtID(self, pos):
@@ -202,6 +204,7 @@ class Draughts(VisualBlock):
 # Handler for mouse
 def mouse_handler(position):
     global draughts
+    print draughts.getSelectedDraughtID(position)
     if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
         draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
         draughts.updateDraughts()
