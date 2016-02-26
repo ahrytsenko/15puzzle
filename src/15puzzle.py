@@ -42,6 +42,8 @@ class FifteenPuzzleCore:
         return (ID % self.PUZZLE_SIZE)
     
     def updateMovableDraughts(self):
+        print ">>>>>>>>>>>>>>"
+        print self.lstMovableDraughts
         self.lstMovableDraughts = []
         if self.getRow(self.iFreePlace) > 0:
             self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace)-1, self.getCol(self.iFreePlace)))
@@ -51,6 +53,11 @@ class FifteenPuzzleCore:
             self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)-1))
         if self.getCol(self.iFreePlace) < self.PUZZLE_SIZE-1:
             self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)+1))
+        print self.iFreePlace
+        print self.getRow(self.iFreePlace)
+        print self.getCol(self.iFreePlace)
+        print self.lstMovableDraughts
+        print "<<<<<<<<<<<<<<"
     
     #Public methods
     
