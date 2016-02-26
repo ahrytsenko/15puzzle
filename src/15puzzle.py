@@ -188,7 +188,8 @@ class Draughts(VisualBlock):
     
     def updateDraughts(self):
         for i in range(self.draughts_mtrx[0]*self.draughts_mtrx[1]):
-            
+            self.items[i].setCaption(self.getDraughtCaptionByID(self.fpc.lstPlaces[i]))
+            #self.items[i].setNumber(self.fpc.lstPlaces[i])
     
     def getSelectedDraughtID(self, pos):
         found = False
@@ -197,13 +198,13 @@ class Draughts(VisualBlock):
                 if item.isSelected(pos):
                     return item.getNumber()
         return -1
-                    
 
 # Handler for mouse
 def mouse_handler(position):
     global draughts
-    if (draughts.fpc.isMovable(draughts.fpc.getPlaces().index(draughts.getSelectedDraughtID(position)))):
-        draughts.fpc.moveDraught(draughts.fpc.getPlaces().index(draughts.getSelectedDraughtID(position)))
+    if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
+        draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
+        draughts.updateDraughts()
     
 # Handler to draw on canvas
 def draw(canvas):
