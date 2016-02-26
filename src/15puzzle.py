@@ -2,6 +2,8 @@
 #Date: 25 FEB 2016
 #Author: Andrii Grytsenko
 #rograming Language: Python (on-line interpreter www.codeskulptor.org)
+#
+#Debug version
 
 import simplegui
 import random
