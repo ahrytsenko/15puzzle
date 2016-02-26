@@ -123,7 +123,7 @@ class VisualBlock(Block):
     def getBorderWidth(self): return self.borderWidth
     def setBlockColor(self, blockColor): self.color[0] = blockColor
     def setBorderColor(self, borderColor): self.color[0] = borderColor
-    def setColor(self, blockColor, borderColor): self.color = [blockColor, borderColor]
+    def setColor(self, color): self.color = list(color)
         
     def append(self, visualBlock):
         self.items.append(visualBlock)
@@ -147,7 +147,6 @@ class Draught(VisualBlock):
     def getNumber(self): return self.number
     def setCaption(self, caption): self.caption = caption
     def setNumber(self, number): self.number = number
-    def setColor(self, color): self.color = list(color)
     def getCaptionPosition(self):
         cp = self.getBottomLeft()
         cp[0] += (self.getSizeX()-self.frame.get_canvas_textwidth(self.caption, self.getSizeY()))/2
@@ -169,28 +168,28 @@ class Draughts(VisualBlock):
         self.fpc.shuffle()
         i = 0
         for place in self.fpc.getPlaces():
-            self.append(Draught(self.draught_size, self.getDraughtPosByID(i), self.getDraughtColorByID(place), 
-                                1, self.getDraughtCaptionByID(place), i, self.frame))
+            self.append(Draught(self.draught_size, self.getDraughtPosByID(i), self.getDraughtColorByNumber(place), 
+                                1, self.getDraughtCaptionByNumber(place), i, self.frame))
             i += 1
         
     def getDraughtPosByID(self, ID):
         return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
                 self.pos[1]+(self.draught_size[1]*(ID/self.draughts_mtrx[0]))]
     
-    def getDraughtCaptionByID(self, ID):
-        if (ID == self.EMPTY_NUMBER): return ""
-        else: return str(ID+1)
+    def getDraughtCaptionByNumber(self, number):
+        if (number == self.EMPTY_NUMBER): return ""
+        else: return str(number+1)
         
-    def getDraughtColorByID(self, ID):
-        if (ID == self.EMPTY_NUMBER): return list(self.color)
+    def getDraughtColorByNumber(self, number):
+        if (number == self.EMPTY_NUMBER): return list(self.color)
         else: return [self.color[1], self.color[0]]
 
     def getDraughtID(self, row, col): return (row*self.draughts_mtrx[0] + col)
     
     def updateDraughts(self):
         for i in range(self.draughts_mtrx[0]*self.draughts_mtrx[1]):
-            self.items[i].setCaption(self.getDraughtCaptionByID(self.fpc.lstPlaces[i]))
-            self.items[i].setColor(self.getDraughtColorByID(self.fpc.lstPlaces[i]))
+            self.items[i].setCaption(self.getDraughtCaptionByNumber(self.fpc.lstPlaces[i]))
+            self.items[i].setColor(self.getDraughtColorByNumber(self.fpc.lstPlaces[i]))
             #self.items[i].setNumber(self.fpc.lstPlaces[i])
     
     def getSelectedDraughtID(self, pos):
@@ -205,6 +204,8 @@ class Draughts(VisualBlock):
 def mouse_handler(position):
     global draughts
     print draughts.getSelectedDraughtID(position)
+    print draughts.fpc.iFreePlace
+    print draughts.fpc.lstMovableDraughts
     if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
         draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
         draughts.updateDraughts()
