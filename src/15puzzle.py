@@ -1,9 +1,8 @@
 #Description: 15 Puzzle
-#Date: 25 FEB 2016
+#Start Date: 15 FEB 2016
+#End Date: 4 MAR 2016
 #Author: Andrii Grytsenko
-#rograming Language: Python (on-line interpreter www.codeskulptor.org)
-#
-#Debug version
+#Programing Language: Python (on-line interpreter www.codeskulptor.org)
 
 import simplegui
 import random
@@ -70,7 +69,7 @@ class FifteenPuzzleCore:
     #As we have a list of such places (lstMovableDraughts) the task is to check if selected ID is in the list.
     def isMovable(self, ID):
         bPossible = False
-        for placeID in self.lstMovableDraughts:
+        for placeID in self.lstMovablePlaces:
             if not bPossible:
                 bPossible = (placeID == ID)
         return bPossible
@@ -207,7 +206,7 @@ def mouse_handler(position):
     global draughts
     if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
         draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
-        draughts.updatePlaces()
+        draughts.updateDraughts()
     
 # Handler to draw on canvas
 def draw(canvas):
