@@ -1,7 +1,8 @@
 #Description: 15 Puzzle
-#Date: 25 FEB 2016
+#Start Date: 15 FEB 2016
+#End Date: 4 MAR 2016
 #Author: Andrii Grytsenko
-#rograming Language: Python (on-line interpreter www.codeskulptor.org)
+#Programing Language: Python (on-line interpreter www.codeskulptor.org)
 
 import simplegui
 import random
@@ -20,10 +21,10 @@ class FifteenPuzzleCore:
         self.FREE_PLACE = free_place
         self.lstPlaces = []
         self.lstPlaces = range(self.PUZZLE_SIZE*self.PUZZLE_SIZE)
-        self.lstMovableDraughts = []
+        self.lstMovablePlaces = []
         self.iFreePlace = 15
         self.iMovements = 0
-        self.updateMovableDraughts()
+        self.updateMovablePlaces()
         
     #Private methods
     def __str__(self):
@@ -39,16 +40,16 @@ class FifteenPuzzleCore:
     def getCol(self, ID):
         return (ID % self.PUZZLE_SIZE)
     
-    def updateMovableDraughts(self):
-        self.lstMovableDraughts = []
+    def updateMovablePlaces(self):
+        self.lstMovablePlaces = []
         if self.getRow(self.iFreePlace) > 0:
-            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace)-1, self.getCol(self.iFreePlace)))
+            self.lstMovablePlaces.append(self.getID(self.getRow(self.iFreePlace)-1, self.getCol(self.iFreePlace)))
         if self.getRow(self.iFreePlace) < self.PUZZLE_SIZE-1:
-            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace)+1, self.getCol(self.iFreePlace)))
+            self.lstMovablePlaces.append(self.getID(self.getRow(self.iFreePlace)+1, self.getCol(self.iFreePlace)))
         if self.getCol(self.iFreePlace) > 0:
-            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)-1))
+            self.lstMovablePlaces.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)-1))
         if self.getCol(self.iFreePlace) < self.PUZZLE_SIZE-1:
-            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)+1))
+            self.lstMovablePlaces.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)+1))
     
     #Public methods
     
@@ -68,7 +69,7 @@ class FifteenPuzzleCore:
     #As we have a list of such places (lstMovableDraughts) the task is to check if selected ID is in the list.
     def isMovable(self, ID):
         bPossible = False
-        for placeID in self.lstMovableDraughts:
+        for placeID in self.lstMovablePlaces:
             if not bPossible:
                 bPossible = (placeID == ID)
         return bPossible
@@ -79,13 +80,14 @@ class FifteenPuzzleCore:
         self.lstPlaces[self.iFreePlace] = self.lstPlaces[ID]
         self.lstPlaces[ID] = self.FREE_PLACE
         self.iFreePlace = ID
-        self.updateMovableDraughts()
+        self.updateMovablePlaces()
         self.iMovements += 1
 
     def shuffle(self):
         random.shuffle(self.lstPlaces)
         self.iMovements = 0
         self.iFreePlace = self.lstPlaces.index(self.FREE_PLACE)
+        self.updateMovablePlaces()
     
 class Block:
     def __init__(self, size, pos):
@@ -190,7 +192,6 @@ class Draughts(VisualBlock):
         for i in range(self.draughts_mtrx[0]*self.draughts_mtrx[1]):
             self.items[i].setCaption(self.getDraughtCaptionByNumber(self.fpc.lstPlaces[i]))
             self.items[i].setColor(self.getDraughtColorByNumber(self.fpc.lstPlaces[i]))
-            #self.items[i].setNumber(self.fpc.lstPlaces[i])
     
     def getSelectedDraughtID(self, pos):
         found = False
@@ -203,9 +204,6 @@ class Draughts(VisualBlock):
 # Handler for mouse
 def mouse_handler(position):
     global draughts
-    print draughts.getSelectedDraughtID(position)
-    print draughts.fpc.iFreePlace
-    print draughts.fpc.lstMovableDraughts
     if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
         draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
         draughts.updateDraughts()
