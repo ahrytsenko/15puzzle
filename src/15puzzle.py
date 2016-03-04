@@ -7,19 +7,29 @@
 import simplegui
 import random
 
+#Width and Height of PUZZLE
 WIDTH = 320
 HEIGHT = 320
+
+#Number which will be tritted as a free space
 EMPTY_NUMBER = 15
+
+#Number of rows and collumns of PUZZLE
+# ! In classic 15 PUZZLE game there are 4 rows and 4 collumns
 PUZZLE_DIMENSION = 4
+
+#Color of draughts
+# ! The first color is a color of draught
+# ! The second color is a color of draught's label (number)
+# ! The color of a free space is an inverted color of draughts
 PUZZLE_COLORS = ["White", "Green"]
 
 draughts = None
 
 class FifteenPuzzleCore:
-    def __init__(self, puzzle_size = 4, free_place = 15):
+    def __init__(self, puzzle_size = 4, emptyNumber = 15):
         self.PUZZLE_SIZE = puzzle_size
-        self.FREE_PLACE = free_place
-        self.lstPlaces = []
+        self.EMPTY_NUMBER = emptyNumber
         self.lstPlaces = range(self.PUZZLE_SIZE*self.PUZZLE_SIZE)
         self.lstMovablePlaces = []
         self.iFreePlace = 15
@@ -27,13 +37,11 @@ class FifteenPuzzleCore:
         self.updateMovablePlaces()
         
     #Private methods
-    def __str__(self):
-        pass
-        #return "Draughts: " + self.lstPlaces + 
-
+    # getID returns place ID computed by given row and collumn
     def getID(self, aRow, aCol):
         return (aRow*(self.PUZZLE_SIZE) + aCol)
 
+    # getRow returns row where given place 
     def getRow(self, ID):
         return (ID / self.PUZZLE_SIZE)
 
@@ -78,7 +86,7 @@ class FifteenPuzzleCore:
     #After that change the ID of free place (iFreePlace = "ID of place") and fresh lstMovableDraughts.
     def moveDraught(self, ID):
         self.lstPlaces[self.iFreePlace] = self.lstPlaces[ID]
-        self.lstPlaces[ID] = self.FREE_PLACE
+        self.lstPlaces[ID] = self.EMPTY_NUMBER
         self.iFreePlace = ID
         self.updateMovablePlaces()
         self.iMovements += 1
@@ -86,7 +94,7 @@ class FifteenPuzzleCore:
     def shuffle(self):
         random.shuffle(self.lstPlaces)
         self.iMovements = 0
-        self.iFreePlace = self.lstPlaces.index(self.FREE_PLACE)
+        self.iFreePlace = self.lstPlaces.index(self.EMPTY_NUMBER)
         self.updateMovablePlaces()
     
 class Block:
