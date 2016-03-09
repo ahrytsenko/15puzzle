@@ -10,6 +10,7 @@ import random
 #Width and Height of PUZZLE
 WIDTH = 320
 HEIGHT = 320
+INFO_PANEL_HEIGHT = 60
 
 #Number which will be tritted as a free space
 EMPTY_NUMBER = 15
@@ -169,11 +170,11 @@ class Draught(VisualBlock):
     
 class Draughts(VisualBlock):
     def __init__(self, size, color, frame, empty_number, draughts_mtrx):
-        VisualBlock.__init__(self, size, [0, 0], color, 1)
+        VisualBlock.__init__(self, [size[0], size[1]+size[2]], [0, 0], color, 1)
         self.frame = frame
         self.EMPTY_NUMBER = empty_number
         self.draughts_mtrx = list(draughts_mtrx)
-        self.draught_size = [self.size[0]/self.draughts_mtrx[0], self.size[1]/self.draughts_mtrx[1]]
+        self.draught_size = [self.size[0]/self.draughts_mtrx[0], (self.size[1]-size[2])/self.draughts_mtrx[1]]
         self.fpc = FifteenPuzzleCore(draughts_mtrx[0], empty_number)
         self.fpc.shuffle()
         i = 0
@@ -181,6 +182,7 @@ class Draughts(VisualBlock):
             self.append(Draught(self.draught_size, self.getDraughtPosByID(i), self.getDraughtColorByNumber(place), 
                                 1, self.getDraughtCaptionByNumber(place), i, self.frame))
             i += 1
+        self.infoPanel = VisualBlock([size[0], size[2]], [0, size[1]], self.getDraughtColorByNumber(self.EMPTY_NUMBER+1), 1)
         
     def getDraughtPosByID(self, ID):
         return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
@@ -208,14 +210,18 @@ class Draughts(VisualBlock):
                 if item.isSelected(pos):
                     return item.getNumber()
         return -1
+    
+    def draw(self, canvas):
+        VisualBlock.draw(self, canvas)
+        self.infoPanel.draw(canvas)
 
 # Handler for mouse
 def mouse_handler(position):
     global draughts
     if (not draughts.fpc.isOrdered()):
-    	if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
-	        draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
-	        draughts.updateDraughts()
+        if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
+            draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
+            draughts.updateDraughts()
     
 # Handler to draw on canvas
 def draw(canvas):
@@ -223,7 +229,7 @@ def draw(canvas):
     draughts.draw(canvas)
 
 # Create a frame and assign callbacks to event handlers
-frame = simplegui.create_frame("Home", WIDTH, HEIGHT)
+frame = simplegui.create_frame("Home", WIDTH, HEIGHT+INFO_PANEL_HEIGHT)
 frame.set_mouseclick_handler(mouse_handler)
 frame.set_draw_handler(draw)
 
@@ -231,4 +237,4 @@ frame.set_draw_handler(draw)
 frame.start()
 
 # Test area
-draughts = Draughts([WIDTH, HEIGHT], PUZZLE_COLORS, frame, EMPTY_NUMBER, [PUZZLE_DIMENSION, PUZZLE_DIMENSION])
+draughts = Draughts([WIDTH, HEIGHT, INFO_PANEL_HEIGHT], PUZZLE_COLORS, frame, EMPTY_NUMBER, [PUZZLE_DIMENSION, PUZZLE_DIMENSION])
