@@ -212,9 +212,10 @@ class Draughts(VisualBlock):
 # Handler for mouse
 def mouse_handler(position):
     global draughts
-    if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
-        draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
-        draughts.updateDraughts()
+    if (not draughts.fpc.isOrdered()):
+    	if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
+	        draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
+	        draughts.updateDraughts()
     
 # Handler to draw on canvas
 def draw(canvas):
