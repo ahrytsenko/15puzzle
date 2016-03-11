@@ -1,49 +1,47 @@
 #Description: 15 Puzzle
 #Date: 15 FEB 2016
 #Author: Andrii Grytsenko
-#rograming Language: Python (on-line interpreter www.codeskulptor.org)
+#Programing Language: Python (on-line interpreter www.codeskulptor.org)
 
-import simplegui
 import random
 
 class FifteenPuzzleCore:
-    
-    def __init__(self, puzzle_size = 4, free_place = 15):
+    def __init__(self, puzzle_size = 4, emptyNumber = 15):
         self.PUZZLE_SIZE = puzzle_size
-        self.FREE_PLACE = free_place
-        self.lstPlaces = []
+        self.EMPTY_NUMBER = emptyNumber
         self.lstPlaces = range(self.PUZZLE_SIZE*self.PUZZLE_SIZE)
-        self.lstMovableDraughts = []
+        self.lstMovablePlaces = []
         self.iFreePlace = 15
         self.iMovements = 0
-        self.updateMovableDraughts()
+        self.updateMovablePlaces()
         
     #Private methods
-    def __str__(self):
-        pass
-        #return "Draughts: " + self.lstPlaces + 
-
+    # getID returns place ID computed by given row and collumn
     def getID(self, aRow, aCol):
         return (aRow*(self.PUZZLE_SIZE) + aCol)
 
+    # getRow returns row where given place 
     def getRow(self, ID):
         return (ID / self.PUZZLE_SIZE)
 
     def getCol(self, ID):
         return (ID % self.PUZZLE_SIZE)
     
-    def updateMovableDraughts(self):
-        self.lstMovableDraughts = []
+    def updateMovablePlaces(self):
+        self.lstMovablePlaces = []
         if self.getRow(self.iFreePlace) > 0:
-            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace)-1, self.getCol(self.iFreePlace)))
+            self.lstMovablePlaces.append(self.getID(self.getRow(self.iFreePlace)-1, self.getCol(self.iFreePlace)))
         if self.getRow(self.iFreePlace) < self.PUZZLE_SIZE-1:
-            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace)+1, self.getCol(self.iFreePlace)))
+            self.lstMovablePlaces.append(self.getID(self.getRow(self.iFreePlace)+1, self.getCol(self.iFreePlace)))
         if self.getCol(self.iFreePlace) > 0:
-            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)-1))
+            self.lstMovablePlaces.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)-1))
         if self.getCol(self.iFreePlace) < self.PUZZLE_SIZE-1:
-            self.lstMovableDraughts.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)+1))
+            self.lstMovablePlaces.append(self.getID(self.getRow(self.iFreePlace), self.getCol(self.iFreePlace)+1))
     
     #Public methods
+    
+    def getMovements(self): return self.iMovements
+    def getPlaces(self): return list(self.lstPlaces)
     
     #Description: Check if all graughts are at the right places. 
     #Simply to check if ID of place is equal to ID of draught at that place (lstPlaces[i] == i)
@@ -58,7 +56,7 @@ class FifteenPuzzleCore:
     #As we have a list of such places (lstMovableDraughts) the task is to check if selected ID is in the list.
     def isMovable(self, ID):
         bPossible = False
-        for placeID in self.lstMovableDraughts:
+        for placeID in self.lstMovablePlaces:
             if not bPossible:
                 bPossible = (placeID == ID)
         return bPossible
@@ -67,15 +65,16 @@ class FifteenPuzzleCore:
     #After that change the ID of free place (iFreePlace = "ID of place") and fresh lstMovableDraughts.
     def moveDraught(self, ID):
         self.lstPlaces[self.iFreePlace] = self.lstPlaces[ID]
-        self.lstPlaces[ID] = self.FREE_PLACE
+        self.lstPlaces[ID] = self.EMPTY_NUMBER
         self.iFreePlace = ID
-        self.updateMovableDraughts()
+        self.updateMovablePlaces()
         self.iMovements += 1
 
     def shuffle(self):
         random.shuffle(self.lstPlaces)
         self.iMovements = 0
-        self.iFreePlace = self.lstPlaces.index(self.FREE_PLACE)
+        self.iFreePlace = self.lstPlaces.index(self.EMPTY_NUMBER)
+        self.updateMovablePlaces()
     
 # Test area
 fpc = FifteenPuzzleCore(4)
