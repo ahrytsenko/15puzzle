@@ -7,12 +7,14 @@ REQ04: There are 15 draughts on the game field (one draught at one place)
 REQ05: One place is empty
 REQ06: Each draught has a uniq label with number from 1 to 15
 REQ07: Empty place is used for move one draught next to empty place
-REQ08: 
-REQ09: 
-REQ10: 
-REQ11: 
-REQ12: 
-REQ13: 
-REQ14: 
-REQ15: 
-REQ16: 
+REQ08: There are always 2, 3 or 4 draughts that can be moved to empty space.
+REQ09: If empty place is at the corner only 2 draughts can be moved there: one is above/below and one is right/left
+REQ10: If empty space is at the cutting line between corners there are 3 draughts can be moved there: one (ot two) is above/below and two (or one) are right/left
+REQ11: If empty space is somewhere inside (exept REQ09 and REQ10) there are 4 draughts can be moved there: below, above, right and left from the empty space
+REQ12: Draughts are in the order (would say "ordered") if their labels make a sequence 1, 2, 3, ..., 14, 15 in the way starts from the left upper corner and gos from left to right in each row and from up to down row by row
+REQ13: At the begining of the game draughts are unordered
+REQ14: At the begining of the game counter of movements is equal to 0
+REQ15: After each moveing of draughts counter of movements is increased by 1
+REQ16: When draughts are ordered the game ends
+REQ17: Only draughts specified in REQ09, REQ10 and REQ11 can be moved
+REQ18: None of draughts can be moved when game is ended
