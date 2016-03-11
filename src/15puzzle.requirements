@@ -1,2 +1,18 @@
 Classic 15 PUZZLE game requirements
 
+REQ01: Game field is a square dimension 4x4
+REQ02: There are 16 square places on the game field
+REQ03: Places are organized in four rows, four columns in each row
+REQ04: There are 15 draughts on the game field (one draught at one place)
+REQ05: One place is empty
+REQ06: Each draught has a uniq label with number from 1 to 15
+REQ07: Empty place is used for move one draught next to empty place
+REQ08: 
+REQ09: 
+REQ10: 
+REQ11: 
+REQ12: 
+REQ13: 
+REQ14: 
+REQ15: 
+REQ16: 
