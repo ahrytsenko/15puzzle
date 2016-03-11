@@ -82,7 +82,7 @@ fpc.shuffle()
 
 print fpc.lstPlaces
 print fpc.iFreePlace
-print fpc.lstMovableDraughts
+print fpc.lstMovablePlaces
 print fpc.isOrdered()
 
 print "fpc.moveDraught(0)"
@@ -90,7 +90,7 @@ if fpc.isMovable(0):
     fpc.moveDraught(0)
 print fpc.lstPlaces
 print fpc.iFreePlace
-print fpc.lstMovableDraughts
+print fpc.lstMovablePlaces
 print fpc.isOrdered()
 
 print "fpc.moveDraught(11)"
@@ -98,7 +98,7 @@ if fpc.isMovable(11):
     fpc.moveDraught(11)
 print fpc.lstPlaces
 print fpc.iFreePlace
-print fpc.lstMovableDraughts
+print fpc.lstMovablePlaces
 print fpc.isOrdered()
 
 print "fpc.moveDraught(6)"
@@ -106,7 +106,7 @@ if fpc.isMovable(6):
     fpc.moveDraught(6)
 print fpc.lstPlaces
 print fpc.iFreePlace
-print fpc.lstMovableDraughts
+print fpc.lstMovablePlaces
 print fpc.isOrdered()
 
 print "fpc.moveDraught(15)"
@@ -114,7 +114,7 @@ if fpc.isMovable(15):
     fpc.moveDraught(15)
 print fpc.lstPlaces
 print fpc.iFreePlace
-print fpc.lstMovableDraughts
+print fpc.lstMovablePlaces
 print fpc.isOrdered()
 
 print "fpc.moveDraught(10)"
@@ -122,7 +122,7 @@ if fpc.isMovable(10):
     fpc.moveDraught(10)
 print fpc.lstPlaces
 print fpc.iFreePlace
-print fpc.lstMovableDraughts
+print fpc.lstMovablePlaces
 print fpc.isOrdered()
 
 print "fpc.moveDraught(0)"
@@ -130,12 +130,12 @@ if fpc.isMovable(0):
     fpc.moveDraught(0)
 print fpc.lstPlaces
 print fpc.iFreePlace
-print fpc.lstMovableDraughts
+print fpc.lstMovablePlaces
 print fpc.isOrdered()
 
 print "fpc.moveDraught(15)"
 if fpc.isMovable(15): 
     fpc.moveDraught(15)
 print fpc.lstPlaces
-print fpc.lstMovableDraughts
+print fpc.lstMovablePlaces
 print fpc.isOrdered()
