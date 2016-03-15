@@ -211,6 +211,12 @@ class Draughts(VisualBlock):
                     return item.getNumber()
         return -1
     
+    def isOrdered(self): return self.fpc.isOrdered()
+    
+    def isMovable(self, position): return self.fpc.isMovable(self.getSelectedDraughtID(position))
+    
+    def moveDraught(self, position): self.fpc.moveDraught(self.getSelectedDraughtID(position))
+    
     def draw(self, canvas):
         VisualBlock.draw(self, canvas)
         self.infoPanel.draw(canvas)
@@ -218,9 +224,9 @@ class Draughts(VisualBlock):
 # Handler for mouse
 def mouse_handler(position):
     global draughts
-    if (not draughts.fpc.isOrdered()):
-        if (draughts.fpc.isMovable(draughts.getSelectedDraughtID(position))):
-            draughts.fpc.moveDraught(draughts.getSelectedDraughtID(position))
+    if (not draughts.isOrdered()):
+        if (draughts.isMovable(position)):
+            draughts.moveDraught(position)
             draughts.updateDraughts()
     
 # Handler to draw on canvas
