@@ -217,30 +217,21 @@ class Draughts(VisualBlock):
     
     def moveDraught(self, position): self.fpc.moveDraught(self.getSelectedDraughtID(position))
     
-    def draw(self, canvas):
+    def onDraw(self, canvas):
         VisualBlock.draw(self, canvas)
         self.infoPanel.draw(canvas)
-
-# Handler for mouse
-def mouse_handler(position):
-    global draughts
-    if (not draughts.isOrdered()):
-        if (draughts.isMovable(position)):
-            draughts.moveDraught(position)
-            draughts.updateDraughts()
-    
-# Handler to draw on canvas
-def draw(canvas):
-    global draughts
-    draughts.draw(canvas)
+        
+    def onMouseClick(self, position):
+        if (not self.isOrdered()):
+            if (self.isMovable(position)):
+                self.moveDraught(position)
+                self.updateDraughts()
 
 # Create a frame and assign callbacks to event handlers
 frame = simplegui.create_frame("Home", WIDTH, HEIGHT+INFO_PANEL_HEIGHT)
-frame.set_mouseclick_handler(mouse_handler)
-frame.set_draw_handler(draw)
+draughts = Draughts([WIDTH, HEIGHT, INFO_PANEL_HEIGHT], PUZZLE_COLORS, frame, EMPTY_NUMBER, [PUZZLE_DIMENSION, PUZZLE_DIMENSION])
+frame.set_mouseclick_handler(draughts.onMouseClick)
+frame.set_draw_handler(draughts.onDraw)
 
 # Start the frame animation
 frame.start()
-
-# Test area
-draughts = Draughts([WIDTH, HEIGHT, INFO_PANEL_HEIGHT], PUZZLE_COLORS, frame, EMPTY_NUMBER, [PUZZLE_DIMENSION, PUZZLE_DIMENSION])
