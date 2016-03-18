@@ -6,14 +6,15 @@
 
 1 Classes hierarchy
 
-Block <- VisualBlock |<- Draught
-                     |<- Draughts
+                        |<- Draught
+Block <- VisualBlock <- |
+                        |<- Draughts
 
 1.1 class Block
 Block is a very simple class. It represents some "abstract" (it means invisible) rectangle block.
 It has a size (width and height) and a position (x and y coordinates).
 
-Class Block can do in a private:
+Class Block can do in public:
 - get/set its position in three different ways:
 -- get/set X coordinate
 -- get/set Y coordinate
@@ -22,38 +23,28 @@ Class Block can do in a private:
 -- get/set width (length by X coordinate)
 -- get/set height (length by Y coordinate)
 -- get/set width and height togather as a list
-
-Class Block can do in public:
 - get its top left coordanate as a list [x, y]
 - get its top right coordanate as a list [x, y]
 - get its bottom left coordanate as a list [x, y]
 - get its bottom right coordanate as a list [x, y]
+- get its coordanates as a list [TL_coord, TR_coord, BR_coord, BL_coord]
 
-    def __init__(self, size, pos):
-        self.size = list(size)
-        self.pos = list(pos)
+1.2 class VisualBlock
+Class VisualBlock inherits from class Block and provides functionality to visualize a Block.
+Class has extra private fields:
+- color (block and border)
+- width of its border
 
-    def getTopLeft(self): return self.getPos()
-    def getTopRight(self) : return [self.getPosX()+self.getSizeX(), self.getPosY()]
-    def getBottomRight(self): return [self.getPosX()+self.getSizeX(), self.getPosY()+self.getSizeY()]
-    def getBottomLeft(self): return [self.getPosX(), self.getPosY()+self.getSizeY()]
-    def getPolygon(self): return [self.getTopLeft(), self.getTopRight(), self.getBottomRight(), self.getBottomLeft()]
-    
-class VisualBlock(Block):
-    def __init__(self, size, pos, color, borderWidth):
-        Block.__init__(self, size, pos)
-        self.color = list(color)
-        self.borderWidth = borderWidth
-        self.items = []
-        
-    def getBlockColor(self): return self.color[0]
-    def getBorderColor(self): return self.color[1]
-    def getColor(self): return list(self.color)
-    def getBorderWidth(self): return self.borderWidth
-    def setBlockColor(self, blockColor): self.color[0] = blockColor
-    def setBorderColor(self, borderColor): self.color[0] = borderColor
-    def setColor(self, color): self.color = list(color)
-        
+Access to these private fields can be provided by public methods:
+- get/set color of block itself
+- get/set color of its border
+- get/set color as a list [blockColor, borderColor]
+- get width of border: border is designed as a read-only field
+
+Class can contains other instances of VisualBlock class and stores they in a list (items).
+
+
+
     def append(self, visualBlock):
         self.items.append(visualBlock)
         
