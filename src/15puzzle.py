@@ -226,12 +226,18 @@ class Draughts(VisualBlock):
             if (self.isMovable(position)):
                 self.moveDraught(position)
                 self.updateDraughts()
+                
+    def onReset(self):
+        self.fpc.shuffle()
+        self.updateDraughts()
+        
 
 # Create a frame and assign callbacks to event handlers
 frame = simplegui.create_frame("Home", WIDTH, HEIGHT+INFO_PANEL_HEIGHT)
 draughts = Draughts([WIDTH, HEIGHT, INFO_PANEL_HEIGHT], PUZZLE_COLORS, frame, EMPTY_NUMBER, [PUZZLE_DIMENSION, PUZZLE_DIMENSION])
 frame.set_mouseclick_handler(draughts.onMouseClick)
 frame.set_draw_handler(draughts.onDraw)
+frame.add_button("Reset PUZZLE", draughts.onReset)
 
 # Start the frame animation
 frame.start()
