@@ -42,27 +42,14 @@ Access to these private fields can be provided by public methods:
 - get width of border: border is designed as a read-only field
 
 Class can contains other instances of VisualBlock class and stores they in a list (items).
+Method append is used to add items to the list.
+Class can draw itself and all contained VisualBlock objects.
+Class also can interact with user: method isSelected returns TRUE in case user clicks within object's rectangle, and FALSE otherwise.
 
+1.3 class Draught
+Class inherits from VisualBlock class and provide behaivor of one draught.
+Draught has a 
 
-
-    def append(self, visualBlock):
-        self.items.append(visualBlock)
-        
-    def isSelected(self, pos):
-        return (((pos[0] >= self.pos[0]) and (pos[0] < (self.pos[0]+self.size[0]))) and 
-                ((pos[1] >= self.pos[1]) and (pos[1] < (self.pos[1]+self.size[1]))))
-    
-    def draw(self, canvas):
-        canvas.draw_polygon(self.getPolygon(), self.getBorderWidth(), self.getBorderColor(), self.getBlockColor())
-        for item in self.items: item.draw(canvas)
-            
-class Draught(VisualBlock):
-    def __init__(self, size, pos, color, borderWidth, caption, number, frame):
-        VisualBlock.__init__(self, size, pos, color, borderWidth)
-        self.caption = caption
-        self.number = number
-        self.frame = frame
-        
     def getCaption(self): return self.caption
     def getNumber(self): return self.number
     def setCaption(self, caption): self.caption = caption
