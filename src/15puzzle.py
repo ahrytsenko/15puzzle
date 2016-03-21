@@ -171,6 +171,8 @@ class Draught(VisualBlock):
 class Draughts(VisualBlock):
     def __init__(self, size, color, frame, empty_number, draughts_mtrx):
         VisualBlock.__init__(self, [size[0], size[1]+size[2]], [0, 0], color, 1)
+        self.STR_IN_GAME = "Steps: "
+        self.STR_OUT_OF_GAME = "Game over"
         self.frame = frame
         self.EMPTY_NUMBER = empty_number
         self.draughts_mtrx = list(draughts_mtrx)
@@ -183,6 +185,8 @@ class Draughts(VisualBlock):
                                 1, self.getDraughtCaptionByNumber(place), i, self.frame))
             i += 1
         self.infoPanel = VisualBlock([size[0], size[2]], [0, size[1]], self.getDraughtColorByNumber(self.EMPTY_NUMBER+1), 1)
+        self.infoPanel.append(Draught([size[0], size[2]], [0, size[1]], self.getDraughtColorByNumber(self.EMPTY_NUMBER+1), 1, 
+                                      self.STR_IN_GAME+str(self.fpc.iMovements), -1, self.frame))
         
     def getDraughtPosByID(self, ID):
         return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
@@ -226,10 +230,15 @@ class Draughts(VisualBlock):
             if (self.isMovable(position)):
                 self.moveDraught(position)
                 self.updateDraughts()
+                if (not self.isOrdered()):
+                    self.infoPanel.items[0].setCaption(self.STR_IN_GAME+str(self.fpc.iMovements))
+                else:
+                    self.infoPanel.items[0].setCaption(self.STR_OUT_OF_GAME)
                 
     def onReset(self):
         self.fpc.shuffle()
         self.updateDraughts()
+        self.infoPanel.items[0].setCaption(self.STR_IN_GAME+str(self.fpc.iMovements))
         
 
 # Create a frame and assign callbacks to event handlers
