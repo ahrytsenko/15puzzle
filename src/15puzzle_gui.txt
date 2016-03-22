@@ -48,22 +48,36 @@ Class also can interact with user: method isSelected returns TRUE in case user c
 
 1.3 class Draught
 Class inherits from VisualBlock class and provide behaivor of one draught.
-Draught has a text caption and a number 
+Draught has a text caption and a number ID. 
+Class has a private field to store a pointer to the frame context. It is used for internal calculations in method getCaptionPosition.
 
-    def getCaption(self): return self.caption
-    def getNumber(self): return self.number
-    def setCaption(self, caption): self.caption = caption
-    def setNumber(self, number): self.number = number
-    def getCaptionPosition(self):
-        cp = self.getBottomLeft()
-        cp[0] += (self.getSizeX()-self.frame.get_canvas_textwidth(self.caption, self.getSizeY()))/2
-        cp[1] -= self.getSizeY()/8
-        return list(cp)
-        
-    def draw(self, canvas):
-        VisualBlock.draw(self, canvas)
-        canvas.draw_text(self.caption, self.getCaptionPosition(), self.getSizeY(), self.getBorderColor())
-    
+Class has a set of getters and setters:
+- get/set caption
+- get/set number ID
+
+In order to place caption at the center of draught class has a special method getCaptionPosition.
+Method draw of the class extends inherited method of VisualBlock and add drawing a caption.
+
+2 Game implementation (class Draughts)
+
+2.1 Public part
+Class Draughts inherits from VisualBlock class.
+It acceps next parameters for constructor:
+- size (inherit from VisualBlock; extended by third integer - the height of additional information panel under the main game field)
+- color (inherit from VisualBlock)
+- frame (pointer to the frame context)
+- empty_number (tells to class which number will be tritted as an empty field)
+- draughts_mtrx (a list of two integers: number of collumns and number of rows in which class will organize draughts)
+
+Three event handlers:
+- onDraw - draw game field, draughts and information panel. Method is assigned in call frame.set_draw_handler()
+- onMouseClick - implements behaivor for mouse events. Method is assigned in call frame.set_mouseclick_handler()
+- onReset - implements restart of current game session. Method is assigned i call frame.add_button()
+
+2.2 Private part
+
+2.2.1 Private fields
+
 class Draughts(VisualBlock):
     def __init__(self, size, color, frame, empty_number, draughts_mtrx):
         VisualBlock.__init__(self, [size[0], size[1]+size[2]], [0, 0], color, 1)
