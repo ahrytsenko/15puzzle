@@ -48,7 +48,7 @@ Class also can interact with user: method isSelected returns TRUE in case user c
 
 1.3 class Draught
 Class inherits from VisualBlock class and provide behaivor of one draught.
-Draught has a 
+Draught has a text caption and a number 
 
     def getCaption(self): return self.caption
     def getNumber(self): return self.number
@@ -67,6 +67,8 @@ Draught has a
 class Draughts(VisualBlock):
     def __init__(self, size, color, frame, empty_number, draughts_mtrx):
         VisualBlock.__init__(self, [size[0], size[1]+size[2]], [0, 0], color, 1)
+        self.STR_IN_GAME = "Steps: "
+        self.STR_OUT_OF_GAME = "Game over"
         self.frame = frame
         self.EMPTY_NUMBER = empty_number
         self.draughts_mtrx = list(draughts_mtrx)
@@ -79,6 +81,8 @@ class Draughts(VisualBlock):
                                 1, self.getDraughtCaptionByNumber(place), i, self.frame))
             i += 1
         self.infoPanel = VisualBlock([size[0], size[2]], [0, size[1]], self.getDraughtColorByNumber(self.EMPTY_NUMBER+1), 1)
+        self.infoPanel.append(Draught([size[0], size[2]], [0, size[1]], self.getDraughtColorByNumber(self.EMPTY_NUMBER+1), 1, 
+                                      self.STR_IN_GAME+str(self.fpc.iMovements), -1, self.frame))
         
     def getDraughtPosByID(self, ID):
         return [self.pos[0]+(self.draught_size[0]*(ID%self.draughts_mtrx[0])), 
@@ -107,7 +111,27 @@ class Draughts(VisualBlock):
                     return item.getNumber()
         return -1
     
-    def draw(self, canvas):
+    def isOrdered(self): return self.fpc.isOrdered()
+    
+    def isMovable(self, position): return self.fpc.isMovable(self.getSelectedDraughtID(position))
+    
+    def moveDraught(self, position): self.fpc.moveDraught(self.getSelectedDraughtID(position))
+    
+    def onDraw(self, canvas):
         VisualBlock.draw(self, canvas)
         self.infoPanel.draw(canvas)
-
+        
+    def onMouseClick(self, position):
+        if (not self.isOrdered()):
+            if (self.isMovable(position)):
+                self.moveDraught(position)
+                self.updateDraughts()
+                if (not self.isOrdered()):
+                    self.infoPanel.items[0].setCaption(self.STR_IN_GAME+str(self.fpc.iMovements))
+                else:
+                    self.infoPanel.items[0].setCaption(self.STR_OUT_OF_GAME)
+                
+    def onReset(self):
+        self.fpc.shuffle()
+        self.updateDraughts()
+        self.infoPanel.items[0].setCaption(self.STR_IN_GAME+str(self.fpc.iMovements))
