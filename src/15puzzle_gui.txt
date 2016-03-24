@@ -67,17 +67,20 @@ It acceps next parameters for constructor:
 - frame (pointer to the frame context)
 - empty_number (tells to class which number will be tritted as an empty field)
 - draughts_mtrx (a list of two integers: number of collumns and number of rows in which class will organize draughts)
+- optional parameter: text label at the frame for displaying the best score
 
 Three event handlers:
 - onDraw - draw game field, draughts and information panel. Method is assigned in call frame.set_draw_handler()
 - onMouseClick - implements behaivor for mouse events. Method is assigned in call frame.set_mouseclick_handler()
 - onReset - implements restart of current game session. Method is assigned i call frame.add_button()
 
+Public method updateBestScore() which displays the best score as a text label at the frame
+
 2.2 Private part
 
 2.2.1 Private fields
 Class contains:
-- string constants ("Game over" and "Steps:")
+- string constants ("Game over", "Steps:", "The best score:")
 - FifteenPuzzleCore class
 - fields for values passed in constructor
 
@@ -91,9 +94,11 @@ Class contains:
 -  isOrdered: just a wrapper for FifteenPuzzleCore.isOrdered() method
 -  isMovable: accepts a position where mouse clicked and returns true of false if selected draught is movable or not. It uses FifteenPuzzleCore.isMovable() method
 - moveDraught: accepts a position where mouse clicked and uses FifteenPuzzleCore.moveDraught for make a move
+- getBestScoreLabel: returns text for a text label (string constant plus the best score value)
 
 2.3 Using a class for programming a game
 2.3.1 Create a frame
 2.3.2 Create an instance of Draughts class
 2.3.3 Assign event handlers (onDraw, onMouseClick and onReset)
-2.3.4 Start a frame
+2.3.4 Update the best score text label (if if was created at the step 2.3.2)
+2.3.5 Start a frame
