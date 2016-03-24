@@ -1,5 +1,5 @@
 #Description: 15 Puzzle
-Date: 24 MAR 2016
+#Date: 24 MAR 2016
 #Author: Andrii Grytsenko
 #Programing Language: Python (on-line interpreter www.codeskulptor.org)
 
