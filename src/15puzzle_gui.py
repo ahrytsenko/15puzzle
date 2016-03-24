@@ -76,10 +76,13 @@ class Draught(VisualBlock):
         canvas.draw_text(self.caption, self.getCaptionPosition(), self.getSizeY(), self.getBorderColor())
     
 class Draughts(VisualBlock):
-    def __init__(self, size, color, frame, empty_number, draughts_mtrx):
+    def __init__(self, size, color, frame, empty_number, draughts_mtrx, label=None):
         VisualBlock.__init__(self, [size[0], size[1]+size[2]], [0, 0], color, 1)
         self.STR_IN_GAME = "Steps: "
         self.STR_OUT_OF_GAME = "Game over"
+        self.STR_THE_BEST_SCORE = "The best score: "
+        self.bestScore = 0
+        self.lblBestScore = label
         self.frame = frame
         self.EMPTY_NUMBER = empty_number
         self.draughts_mtrx = list(draughts_mtrx)
@@ -127,6 +130,18 @@ class Draughts(VisualBlock):
     def isMovable(self, position): return self.fpc.isMovable(self.getSelectedDraughtID(position))
     
     def moveDraught(self, position): self.fpc.moveDraught(self.getSelectedDraughtID(position))
+        
+    def getBestScoreLabel(self):
+        if (self.bestScore == 0):
+            return self.STR_THE_BEST_SCORE
+        else:
+            return self.STR_THE_BEST_SCORE + str(self.bestScore)
+        
+    def updateBestScore(self):
+        if (self.lblBestScore != None):
+            if ((self.bestScore == 0) or (self.bestScore > self.fpc.getMovements())):
+                self.bestScore = self.fpc.getMovements()
+                self.lblBestScore.set_text(self.getBestScoreLabel())
     
     def onDraw(self, canvas):
         VisualBlock.draw(self, canvas)
@@ -141,6 +156,7 @@ class Draughts(VisualBlock):
                     self.infoPanel.items[0].setCaption(self.STR_IN_GAME+str(self.fpc.iMovements))
                 else:
                     self.infoPanel.items[0].setCaption(self.STR_OUT_OF_GAME)
+                    self.updateBestScore()
                 
     def onReset(self):
         self.fpc.shuffle()
