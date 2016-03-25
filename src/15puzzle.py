@@ -11,7 +11,7 @@ WIDTH = 320
 HEIGHT = 320
 INFO_PANEL_HEIGHT = 60
 
-#Number which will be tritted as a free space
+#Number which will be tritted as an empty place
 EMPTY_NUMBER = 15
 
 #Number of rows and collumns of PUZZLE
