@@ -1,5 +1,5 @@
 # 15puzzle
-Classic 15 Puzzle game
+Classic 15 Puzzle game (Python implementation)
 
 This project is a study-project contains the engine if classic 15 Puzzle game.
 Project implements core game functions.
